@@ -27,7 +27,9 @@ for k in range(1, n + 1):
                 dis[i][j] = dis[i][k] + dis[k][j]
         
 for i in range(1, len(dis)):
-    for j in range(len(dis[i])):
+    for j in range(1, len(dis[i])):
         if dis[i][j] < 1e9:
             print(dis[i][j], end=" ")
+        else:
+            print(0, end=" ")
     print("")
