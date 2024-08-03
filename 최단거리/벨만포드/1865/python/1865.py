@@ -13,11 +13,6 @@ def bellman_ford(n, edges, start):
                 if i == n-1:
                     return False
 
-    # # 음수 사이클 체크: 출발점에서 도달할 수 있는 정점에서 음수 사이클 확인
-    # for u, v, w in edges:
-    #     if dis[u] + w < dis[v]:
-    #         return False  # 음수 사이클 존재
-
     return True
 
 tc = int(sys.stdin.readline())
@@ -32,11 +27,9 @@ for _ in range(tc):
         ms, me, mt = map(int, sys.stdin.readline().split())
         edges.append((ms, me, -abs(mt)))
 
-    has_negative_cycle = False
-    if not bellman_ford(n, edges, 1):
-        has_negative_cycle = True
+    boolean = bellman_ford(n, edges, 1)
         
-    if has_negative_cycle:
-        print("YES")
-    else:
+    if boolean:
         print("NO")
+    else:
+        print("YES")
