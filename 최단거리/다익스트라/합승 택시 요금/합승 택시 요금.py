@@ -8,34 +8,6 @@ def dj(queue, dis, edges):
             if dis[v] > dis[u] + w:
                 dis[v] = dis[u] + w
                 heapq.heappush(queue, [dis[v], v])
-                
-# def dfs(cur_node, total_dis, con1, con2, a, b):
-#     global answer
-#     if total_dis >= answer:
-#         return
-    
-#     if con1 & con2:
-#         answer = total_dis
-#         return
-
-#     for nxt in edges[cur_node]:
-#         _, nxt_node, nxt_dis = nxt
-        
-#         if visited[nxt_node]:
-#             total_dis += nxt_dis
-
-#             if nxt_node == a:
-#                 con1 = True
-#             elif nxt_node == b:
-#                 con2 = True
-
-#             visited[nxt_node] = False
-
-#             dfs(nxt_node, total_dis, con1, con2, a, b)
-
-#             visited[nxt_node] = True
-#             total_dis -= nxt_dis
-
             
 def solution(n, s, a, b, fares):
     edges = [[] for _ in range(n+1)]
@@ -61,8 +33,5 @@ def solution(n, s, a, b, fares):
         
         if dis_2[a] + dis_2[b] + dis[start] < answer:
             answer = dis_2[a] + dis_2[b] + dis[start]
-    
-    # visited = [True for _ in range(n+1)]
-    # dfs(s, 0, False, False, a, b)
 
     return answer
