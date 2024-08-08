@@ -35,3 +35,18 @@ def _union(a,b):
         par[b] = a
     else:
         par[a] = b
+
+
+## 조금 더 단순화 시킨 버전
+def eff_union(a, b):
+    a = _find(a)
+    b = _find(b)
+
+    if a != b:
+        if rank[a] > rank[b]:
+            par[b] = a
+        elif rank[a] < rank[b]:
+            par[a] = b
+        else:
+            par[b] = a
+            rank[a] += 1
