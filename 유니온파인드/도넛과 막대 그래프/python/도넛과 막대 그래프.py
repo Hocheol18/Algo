@@ -1,6 +1,7 @@
-par = [i for i in range(1000001)]
-rank = [1 for _ in range(1000001)]
-edge_ = [1 for _ in range(1000001)]
+par = [i for i in range(1000000)]
+rank = [1 for _ in range(1000000)]
+edge_ = [0 for _ in range(1000000)]
+node_ = [0 for _ in range(1000000)]
 
 def _find(a):
     if par[a] == a:
@@ -14,41 +15,45 @@ def _union(a, b):
     
     if a == b:
         edge_[a] += 1
-        return 
+        return
+    
+    if rank[a] < rank[b]:
+        a, b = b, a
+
+    par[b] = a
+    edge_[a] += edge_[b] + 1
+    node_[a] += node_[b] + 1
     
     if rank[a] == rank[b]:
-        edge_[b] += edge_[a]
-        par[a] = b
-        rank[b] += 1
-    elif rank[a] > rank[b]:
-        edge_[a] += edge_[b]
-        par[b] = a
-    else:
-        par[a] = b
-        edge_[b] += edge_[a]
+        rank[a] += 1
         
 def solution(edges):
-    global answer, answer_
-    start = edges[0][0]
-    answer = [edges[0][0], 0, 0, 0]
-    answer_ = []
+    # 출발 노드 구하는 로직
+    connection_count = [0] * 1000000
+    for u, v in edges:
+        connection_count[u] += 1
+        connection_count[v] =- 1
+    start_node = connection_count.index(max(connection_count))
+    answer = [start_node, 0, 0, 0]
     
-    for edge in edges:
-        if edge[0] != start:
-            _union(edge[0], edge[1])
-        else:
-            answer_.append(edge[1])
+    box = []
+    
+    for u, v in edges:
+        if u == start_node:
+            node_[v] += 1
+            box.append(v)
+
+    for u, v in edges:
+        if u != start_node:
+            _union(u,v)
             
-    for ans in answer_:
-        if edge_[_find(ans)] - 1 == rank[_find(ans)] * 2 + 2:
-            answer[3] += 1
-        elif edge_[_find(ans)] - 1 == rank[_find(ans)] - 1:
+    for element in box:
+        target = _find(element)
+        if node_[target] == edge_[target] + 1:
             answer[2] += 1
-        elif edge_[_find(ans)] - 1 == rank[_find(ans)]:
+        elif node_[target] == edge_[target]:
             answer[1] += 1
-        elif edge_[_find(ans)] - 1 == 0:
-            answer[2] += 1
-        elif edge_[_find(ans)] - 1 == 1:
-            answer[1] += 1
-            
+        elif node_[target] + 1 == edge_[target]:
+            answer[3] += 1 
+    
     return answer
