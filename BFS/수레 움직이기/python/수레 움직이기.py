@@ -10,9 +10,10 @@ def bfs(ry, rx, by, bx, maze):
     r_visited[ry][rx], b_visited[by][bx], rr_visited[ry][rx], bb_visited[by][bx] = True, True, True, True
     queue.append([0, ry, rx, by, bx, deepcopy(r_visited), deepcopy(b_visited), deepcopy(rr_visited), deepcopy(bb_visited)])
 
-    while queue:
+    ii = 0
+    while ii < 10000000:
         cnt, ry, rx, by, bx, r_visited, b_visited, rr_visited, bb_visited = queue.popleft()
-        
+        print(cnt, ry, rx, by, bx)
         if maze[ry][rx] == 3 and maze[by][bx] == 4:
             return cnt
         
@@ -35,28 +36,37 @@ def bfs(ry, rx, by, bx, maze):
             
             else:
                 if boundary(ry+dy, rx+dx) and not r_visited[ry+dy][rx+dx] and maze[ry+dy][rx+dx] != 5:
-
+                
                     for ddy, ddx in direction:
                         if boundary(by+ddy, bx+ddx) and not b_visited[by+ddy][bx+ddx] and not ((ry+dy == by+ddy) and (rx+dx == bx+ddx)) and maze[by+ddy][bx+ddx] != 5:
 
                             if (by+ddy == ry and bx+ddx == rx) and (ry+dy == by and rx+dx == bx):
                                 continue
-                            r_visited[ry+dy][rx+dx] = True  
-                            b_visited[by+ddy][bx+ddx] = True
-                            queue.append([cnt + 1, ry+dy, rx+dx, by+ddy, bx+ddx, deepcopy(r_visited), deepcopy(b_visited), deepcopy(rr_visited), deepcopy(bb_visited)])
+
+                            new_r_visited = deepcopy(r_visited)
+                            new_b_visited = deepcopy(b_visited)
+
+                            new_r_visited[ry + dy][rx + dx] = True
+                            new_b_visited[by + ddy][bx + ddx] = True
+
+                            queue.append([cnt + 1, ry+dy, rx+dx, by+ddy, bx+ddx, new_r_visited, new_b_visited, rr_visited, bb_visited])
                 
                 if boundary(by+dy, bx+dx) and not bb_visited[by+dy][bx+dx] and maze[by+dy][bx+dx] != 5:
-
+                    
                     for ddy, ddx in direction:
                         if boundary(ry+ddy, rx+ddx) and not rr_visited[ry+ddy][rx+ddx] and not ((ry+ddy == by+dy) and (rx+ddx == bx+dx)) and maze[ry+ddy][rx+ddx] != 5:
                             if (ry+ddy == by and rx + ddx == bx) and (by+dy == ry and bx+dx == rx):
                                 continue 
-                            bb_visited[by+dy][bx+dx] = True
-                            rr_visited[ry+ddy][rx+ddx] = True
-                            queue.append([cnt + 1, ry+ddy, rx+ddx, by+dy, bx+dx, deepcopy(r_visited), deepcopy(b_visited), deepcopy(rr_visited), deepcopy(bb_visited)])
+
+                            new_r_visited = deepcopy(rr_visited)
+                            new_b_visited = deepcopy(bb_visited)
+                            new_r_visited[ry + ddy][rx + ddx] = True
+                            new_b_visited[by + dy][bx + dx] = True
+
+                            queue.append([cnt + 1, ry+ddy, rx+ddx, by+dy, bx+dx, r_visited, b_visited, new_r_visited, new_b_visited])
+        ii += 1
 
     return 0
-
 
 def solution(maze):
     global boundary, direction, n, m
@@ -74,3 +84,5 @@ def solution(maze):
                 by, bx = y, x
     ans = bfs(ry, rx, by, bx, maze)
     return ans
+
+solution([[4, 3, 0, 0], [5, 5, 5, 0], [1, 0, 0, 0], [2, 0, 0, 0]])

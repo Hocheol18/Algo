@@ -36,7 +36,6 @@ def solution(land):
                 size_map[label] = size
                 label += 1
 
-    
     for x in range(m):
         check = []
         ans = 0
