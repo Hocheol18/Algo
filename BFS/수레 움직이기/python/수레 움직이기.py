@@ -10,10 +10,8 @@ def bfs(ry, rx, by, bx, maze):
     r_visited[ry][rx], b_visited[by][bx], rr_visited[ry][rx], bb_visited[by][bx] = True, True, True, True
     queue.append([0, ry, rx, by, bx, deepcopy(r_visited), deepcopy(b_visited), deepcopy(rr_visited), deepcopy(bb_visited)])
 
-    ii = 0
-    while ii < 10000000:
+    while queue:
         cnt, ry, rx, by, bx, r_visited, b_visited, rr_visited, bb_visited = queue.popleft()
-        print(cnt, ry, rx, by, bx)
         if maze[ry][rx] == 3 and maze[by][bx] == 4:
             return cnt
         
@@ -64,7 +62,6 @@ def bfs(ry, rx, by, bx, maze):
                             new_b_visited[by + dy][bx + dx] = True
 
                             queue.append([cnt + 1, ry+ddy, rx+ddx, by+dy, bx+dx, r_visited, b_visited, new_r_visited, new_b_visited])
-        ii += 1
 
     return 0
 
@@ -85,4 +82,4 @@ def solution(maze):
     ans = bfs(ry, rx, by, bx, maze)
     return ans
 
-solution([[4, 3, 0, 0], [5, 5, 5, 0], [1, 0, 0, 0], [2, 0, 0, 0]])
+solution([[4, 1, 2, 3]])
