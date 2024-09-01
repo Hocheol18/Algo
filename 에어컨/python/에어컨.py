@@ -27,6 +27,7 @@ def solution(temperature, t1, t2, a, b, onboard):
         if onboard[index+1] == 1:
             # 세 가지 케이스 전부 적용
             # 이것이 맞는가?
+            # 다른 방법 및 힌트를 얻어야 할 것 같음.
             if t1 < nowtem < t2:
                 queue.append([index+1, nowtem + 1, answer + a])
                 queue.append([index+1, nowtem - 1, answer + a])
