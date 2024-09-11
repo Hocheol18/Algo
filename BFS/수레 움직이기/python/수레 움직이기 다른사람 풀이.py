@@ -1,5 +1,6 @@
-from collections import deque
+# 수민 풀이
 
+from collections import deque
 
 def solution(maze):
     # 최대 4*4칸
