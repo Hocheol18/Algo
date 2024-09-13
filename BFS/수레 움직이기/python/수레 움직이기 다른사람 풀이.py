@@ -1,4 +1,4 @@
-# 수민 풀이 ;
+# 수민 풀이 ;;
 
 from collections import deque
 
